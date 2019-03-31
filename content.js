@@ -1,27 +1,26 @@
-function getLanguages() {
+async function getLanguages() {
     username = window.location.pathname;
-    username = username.slice(1, username.length-1);
+    username = username.slice(1, username.length - 1);
     var sum = 0;
     var languages = {};
-    fetch(`https://api.github.com/users/${username}/repos`)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
+
+    try {
+        const response = await fetch(`https://api.github.com/users/${username}/repos`);
+        const data = await response.json();
         for (i in data) {
             obj = data[i]
             let lang = fetch(obj['languages_url']).then(response => response.json())
-            .then(data => {
-                for (i in data) {
-                    languages[i] = (languages[i] || 0) + data[i];
-                    console.log(i+" : "+data[i]);
-                    sum += data[i];
-                }                
-            })
+                .then(data => {
+                    for (i in data) {
+                        languages[i] = (languages[i] || 0) + data[i];
+                        console.log(i + " : " + data[i]);
+                        sum += data[i];
+                    }
+                })
         }
-        
-    })
-    .catch(error => console.error(error))
-    
+    }
+    catch {error => console.error(error)}
+
 }
 
 var newNode = document.createElement('div');
