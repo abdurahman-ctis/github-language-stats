@@ -33,7 +33,7 @@ COLORS = {
     "ColdFusion": "#ed2cd6", 
     "Common Lisp": "#3fb68b", 
     "Component Pascal": "#b0ce4e", 
-    "cpp": "#f34b7d", 
+    "C++": "#f34b7d", 
     "Crystal": "#776791", 
     "CSS": "#563d7c", 
     "D": "#ba595e", 
@@ -198,6 +198,8 @@ COLORS = {
     "XQuery": "#5232e7", 
     "Zephir": "#118f9e"
 }
+username = window.location.pathname;
+username = username.slice(1, username.length - 1);
 async function parse(data) {
     var sum = 0;
     var languages = {};
@@ -216,8 +218,6 @@ async function parse(data) {
 }
 
 async function getLanguages() {
-    username = window.location.pathname;
-    username = username.slice(1, username.length - 1);
     var languages = {};
     var sum = 0;
     try {
@@ -225,7 +225,6 @@ async function getLanguages() {
         const data = await response.json();
 
         res = await parse(data);
-        console.log(res)
         for(i in res.languages) {
             languages[i] = 100*res.languages[i]/res.sum;
         }
@@ -235,14 +234,61 @@ async function getLanguages() {
     return languages
 }
 
-console.log(COLORS)
-// $.getJSON("colors.json", function(json) {
-//     console.log(json);
-//     //access your JSON file through the variable "json"
-// });
+lng = getLanguages().then(res => {
+    var newNode = document.createElement('canvas');
+    newNode.id = "chart"
+    $(function(){
+        var languages = Object.keys(res);
+        console.log(languages)
+        var colors = [];
+        for(i in languages) {
+            colors.push(COLORS[languages[i]]);
+        }
+        //get the doughnut chart canvas
+        var ctx = $("#chart");
+        //doughnut chart data
+        var data = {
+            labels: languages,
+            datasets: [
+                {
+                    label: "TeamA Score",
+                    data: Object.values(res),
+                    backgroundColor: colors,
+                    borderColor: colors,
+                    borderWidth: Array.apply(null, Array(languages.length)).map(function (x, i) { return 1; })
+                }
+            ]
+        };
 
-lng = getLanguages().then(res => console.log(res));
-var newNode = document.createElement('div');
-newNode.innerText = "HIIIII";
-var header = document.getElementsByClassName("UnderlineNav user-profile-nav js-sticky top-0")[0];
-header.parentNode.insertBefore(newNode, header);
+        
+        //options
+        var options = {
+            responsive: true,
+            title: {
+                display: true,
+                position: "top",
+                text: username,
+                fontSize: 18,
+                fontColor: "#111"
+            },
+            legend: {
+                display: true,
+                position: "bottom",
+                labels: {
+                    fontColor: "#333",
+                    fontSize: 16
+                }
+            }
+        };
+
+        //create Chart class object
+        var chart = new Chart(ctx, {
+            type: "doughnut",
+            data: data,
+            options: options
+        });
+
+    });
+    var header = document.getElementsByClassName("UnderlineNav user-profile-nav js-sticky top-0")[0];
+    header.parentNode.insertBefore(newNode, header);
+});
