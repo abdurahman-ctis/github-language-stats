@@ -1,1 +1,0 @@
-export default "?client_id=2b10faabc83ee8597aa3&client_secret=9f185cfdfb87cdbb54609042a759ceb6bbb742a0";

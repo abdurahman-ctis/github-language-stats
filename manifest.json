@@ -3,12 +3,11 @@
    
     "name": "Github Languages",
     "version": "0.1.0",
-    "description": "Lateral blog post demo extension",
+    "description": "Show language stats of a Github user.",
    
     "content_scripts": [{
-      "css": ["styles.css"],
       "js": ["jquery-3.3.1.min.js", "Chart.min.js", "content.js"],
-      "matches": ["https://github.com/*"]
+      "matches": ["https://github.com/*/"]
     }],
 
     "background":
