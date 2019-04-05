@@ -241,8 +241,6 @@ async function getLanguages() {
 lng = getLanguages().then(res => {
     var newNode = document.createElement('canvas');
     newNode.id = "chart"
-    newNode.width = 500;
-    newNode.height = 500;
     $(function () {
         var languages = Object.keys(res);
         console.log(languages)
