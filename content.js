@@ -1,4 +1,4 @@
-TOKEN = "?client_id=2b10faabc83ee8597aa3&client_secret=9f185cfdfb87cdbb54609042a759ceb6bbb742a0";
+TOKEN = "?client_id=5e6856f5d376243a9f95&client_secret=40a0d6ecdc5dd4e0de36b4425201c18c469187ab";
 COLORS = {
     "ABAP": "#E8274B",
     "ActionScript": "#882B0F",

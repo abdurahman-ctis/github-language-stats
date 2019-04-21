@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
    
-    "name": "Github Languages",
-    "version": "0.1.0",
-    "description": "Show language stats of a Github user.",
+    "name": "Github Language Stats",
+    "version": "1.0",
+    "description": "Shows language stats of a Github user, by analyzing all the public repositories.",
    
     "content_scripts": [{
       "js": ["jquery-3.3.1.min.js", "Chart.min.js", "content.js"],
